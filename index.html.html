@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>${DATA.title}</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+  };
+</script>
+<style>
+:root{ --bg:#0b1220; --panel:#111a2e; --text:#e5e7eb; --muted:#aab3c5; --primary:#6366f1; --primary2:#22c55e; --border:rgba(255,255,255,0.1); --radius:16px; }
+body{ margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; justify-content:center; padding:20px; box-sizing:border-box; }
+.card{ background:var(--panel); width:100%; max-width:600px; border-radius:var(--radius); padding:24px; box-shadow:0 10px 30px rgba(0,0,0,0.3); border:1px solid var(--border); }
+h1{ margin:0 0 10px; font-size:22px; } .desc{ color:var(--muted); font-size:13px; margin-bottom:20px; }
+label{ font-size:10px; text-transform:uppercase; font-weight:bold; color:var(--muted); margin-bottom:4px; display:block; }
+input{ width:100%; padding:12px; border-radius:10px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:var(--text); margin-bottom:15px; box-sizing:border-box; outline:none; }
+.btn{ background:var(--primary); color:#fff; border:none; padding:12px 20px; border-radius:10px; cursor:pointer; font-weight:700; width:100%; transition:0.2s; }
+.btn:hover{ filter:brightness(1.1); }
+.opt{ display:block; padding:14px; border:1px solid var(--border); border-radius:10px; margin-bottom:10px; cursor:pointer; transition:0.2s; }
+.opt:hover{ background:rgba(255,255,255,0.05); } .opt.active{ border-color:var(--primary); background:rgba(99,102,241,0.1); }
+.bar{ height:6px; background:rgba(255,255,255,0.05); border-radius:3px; margin-bottom:20px; overflow:hidden; }
+.fill{ height:100%; background:var(--primary); transition:width 0.3s; }
+table{ width:100%; border-collapse:collapse; margin-top:15px; font-size:12px; }
+th, td{ text-align:left; padding:8px; border-bottom:1px solid var(--border); }
+${dir==='rtl'?'th, td{text-align:right;}':''}
+</style>
+</head>
+<body>
+<div class="card" id="app"></div>
+<script>
+const DATA = {"title":"Interactive Quiz","desc":"","lang":"ar","randQ":true,"randA":true,"saveData":false,"classLbl":"Kelas","sheetUrl":"","questions":[{"q":"ما هي الطريقة التي تبدأ بتعليم الأجزاء الصغرى مثل الحروف، ثم تنتقل تدريجياً إلى الكلمات والجمل؟","choices":["الطريقة التركيبية أو الجزئية","الطريقة التحليلية أو الكلية","طريقة الخبرة","طريقة القصة"],"answerIndex":0,"explain":""},{"q":"أي من الأساليب التالية يركز بشكل أساسي على تعليم أسماء الحروف الهجائية (مثل ألف، باء، تاء) مع حركاتها؟","choices":["الطريقة الأبجدية","الطريقة الصوتية","الطريقة المقطعية","طريقة الكلمة"],"answerIndex":0,"explain":""},{"q":"تعتمد طريقة الجملة في تعليم القراءة على مبدأ سيكولوجي يرى أن الإدراك يبدأ بالكل ثم الأجزاء. ما اسم هذا المبدأ؟","choices":["مبدأ الجشطلت","المبدأ السلوكي","المبدأ البنائي","مبدأ التحليل النفسي"],"answerIndex":0,"explain":""},{"q":"ما هو الفرق الجوهري بين الطريقة الأبجدية والطريقة الصوتية؟","choices":["التركيز على اسم الحرف في الأبجدية مقابل صوته في الصوتية","الأبجدية تبدأ بالجمل والصوتية تبدأ بالكلمات","الصوتية تهتم بالمعنى والأبجدية تهتم بالشكل فقط","لا يوجد فرق بينهما فهما مصطلحان لنفس الطريقة"],"answerIndex":0,"explain":""},{"q":"لماذا تُفضل الطريقة التوليفية (الإكلتيكية) في كثير من المناهج الحديثة؟","choices":["لأنها تدمج مزايا الطرق التركيبية والتحليلية وتراعي الفروق الفردية","لأنها تعتمد فقط على حفظ الحروف دون الحاجة لفهم المعنى","لأنها الطريقة الأسرع التي لا تتطلب أي مجهود من المعلم","لأنها تركز حصرياً على القصص الطويلة والرسوم التوضيحية"],"answerIndex":0,"explain":""},{"q":"أي من الطرق التالية تعتمد بشكل أساسي على رصيد التلميذ من المفردات اللغوية المكتسبة من تجاربه اليومية؟","choices":["طريقة الخبرة","الطريقة المقطعية","الطريقة الأبجدية","طريقة الكلمة"],"answerIndex":0,"explain":""},{"q":"ما هو العيب الذي غالباً ما يُوجه للطريقة التركيبية من الناحية التربوية؟","choices":["أنها قد تصرف ذهن المتعلم عن المعنى بسبب التركيز الزائد على الحروف","أنها صعبة جداً على المعلمين المبتدئين","أنها تبدأ بجمل طويلة جداً يصعب حفظها","أنها لا تهتم بتعليل الحركات الإعرابية"],"answerIndex":0,"explain":""},{"q":"ما هي الخطوة الأولى في تطبيق 'طريقة القصة' لتعليم القراءة؟","choices":["تقديم قصة قصيرة مشوقة يدركها التلاميذ ككل","تحفيظ التلاميذ الحروف الهجائية التي ستظهر في القصة","شرح القواعد النحوية المستخدمة في الحوار","كتابة الحروف المنفردة على السبورة وطلب نطقها"],"answerIndex":0,"explain":""},{"q":"في 'طريقة الكلمة'، متى يتم الانتقال إلى دراسة الحروف التي تتكون منها الكلمة؟","choices":["بعد أن يحفظ التلميذ شكل الكلمة ككل ويدرك معناها","قبل البدء بعرض الكلمة أو الصورة المرتبطة بها","بعد تعلم كتابة الجمل الكاملة فقط","لا يتم تعلم الحروف أبداً في هذه الطريقة"],"answerIndex":0,"explain":""},{"q":"تُعرف الطريقة التي تجمع بين نطق الحروف وربطها بالصور والكلمات لضمان الدقة والفهم بـ:","choices":["الطريقة التوليفية","الطريقة الأبجدية","طريقة الجملة","الطريقة الصوتية"],"answerIndex":0,"explain":""}]}; 
+const UI = {"name":"الاسم الكامل","class":"Kelas","start":"ابدأ","next":"التaling","finish":"إنهاء","retake":"إعادة","rank":"أفضل 10 مراكز","saving":"جاري الحفظ..."};
+let state = { mode:'login', idx:0, ans:[], name:'', class:'', qs:[], loading:false, ranking:[] };
+
+function render(){
+  const app = document.getElementById('app');
+  if(state.mode==='login'){
+    app.innerHTML = '<h1>' + DATA.title + '</h1><p class="desc">' + DATA.desc + '</p>' +
+      '<label>' + UI.name + '</label><input type="text" id="u_name" value="' + state.name + '">' +
+      '<label>' + UI.class + '</label><input type="text" id="u_class" value="' + state.class + '">' +
+      '<button class="btn" onclick="start()">' + UI.start + '</button>';
+  } else if(state.mode==='quiz'){
+    const q = state.qs[state.idx];
+    app.innerHTML = '<div class="bar"><div class="fill" style="width:' + ((state.idx)/state.qs.length)*100 + '%"></div></div>' +
+      '<div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Q ' + (state.idx+1) + ' / ' + state.qs.length + '</div>' +
+      '<h2 style="font-size:17px; margin-bottom:20px;">' + q.q + '</h2>' +
+      q.choices.map((c,i) => '<div class="opt ' + (state.ans[state.idx]===i?'active':'') + '" onclick="setAns(' + i + ')">' + c + '</div>').join('') +
+      '<button class="btn" style="margin-top:10px;" onclick="next()">' + (state.idx===state.qs.length-1?UI.finish:UI.next) + '</button>';
+  } else if(state.mode==='result'){
+    let score = state.ans.reduce((acc, a, i) => acc + (a === state.qs[i].answerIndex ? 1 : 0), 0);
+    let pct = Math.round((score/state.qs.length)*100);
+    let html = '<h1>Result</h1><div style="font-size:48px; font-weight:900; color:var(--primary2);">' + pct + '% (' + score + '/' + state.qs.length + ')</div>';
+    if(DATA.saveData){
+      html += '<div style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;"><h3>' + UI.rank + '</h3>';
+      if(state.loading) html += '<p>' + UI.saving + '</p>';
+      else if(state.ranking.length > 0) {
+        html += '<table><tr><th>#</th><th>Name</th><th>' + UI.class + '</th><th>%</th></tr>' + 
+          state.ranking.map((r,i) => '<tr><td>' + (i+1) + '</td><td>' + r.name + '</td><td>' + r.class + '</td><td>' + r.percent + '</td></tr>').join('') + '</table>';
+      }
+      html += '</div>';
+    }
+    html += '<button class="btn" style="margin-top:20px;" onclick="location.reload()">' + UI.retake + '</button>';
+    app.innerHTML = html;
+  }
+  if (window.MathJax && window.MathJax.typeset) window.MathJax.typeset();
+}
+function start(){
+  state.name = document.getElementById('u_name').value.trim(); 
+  state.class = document.getElementById('u_class').value.trim();
+  if(!state.name || !state.class) return alert('Sila isi maklumat!');
+  state.qs = JSON.parse(JSON.stringify(DATA.questions));
+  if(DATA.randQ) state.qs.sort(() => Math.random()-0.5);
+  if(DATA.randA) state.qs.forEach(q => {
+    let orig = q.choices[q.answerIndex];
+    q.choices.sort(() => Math.random()-0.5);
+    q.answerIndex = q.choices.indexOf(orig);
+  });
+  state.ans = new Array(state.qs.length).fill(null);
+  state.mode = 'quiz'; render();
+}
+function setAns(i){ state.ans[state.idx] = i; render(); }
+function next(){
+  if(state.ans[state.idx]===null) return alert('Sila pilih jawapan!');
+  if(state.idx < state.qs.length - 1){ state.idx++; render(); }
+  else { finish(); }
+}
+async function finish(){
+  state.mode = 'result'; render();
+  if(DATA.saveData && DATA.sheetUrl){
+    state.loading = true; render();
+    let score = state.ans.reduce((acc, a, i) => acc + (a === state.qs[i].answerIndex ? 1 : 0), 0);
+    let pct = Math.round((score/state.qs.length)*100);
+    try {
+      await fetch(DATA.sheetUrl, { method:'POST', body: JSON.stringify({name:state.name, class:state.class, score:score, percent:pct}), mode:'no-cors' });
+      setTimeout(async () => {
+        try { const res = await fetch(DATA.sheetUrl); state.ranking = await res.json(); render(); } catch(e){}
+        state.loading = false; render();
+      }, 1500);
+    } catch(e){ state.loading = false; render(); }
+  }
+}
+render();
+</script>
+</body></html>
